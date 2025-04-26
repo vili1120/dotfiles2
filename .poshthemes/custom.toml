@@ -1,0 +1,42 @@
+version = 3
+
+[[blocks]]
+  type = "prompt"
+  alignment = "left"
+  
+  [[blocks.segments]]
+    type = "path"
+    template = "{{ .Path }}"
+    foreground = "#d3869b"
+
+  [[blocks.segments]]
+    type = 'git'
+    style = 'plain'
+    foreground = 'p:grey'
+    background = 'transparent'
+    template = ' ({{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <cyan>{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>)'
+
+    [blocks.segments.properties]
+      branch_icon = ''
+      commit_icon = '@'
+      fetch_status = true
+
+[[blocks]]
+  type = "prompt"
+  alignment = "left"
+  newline = true
+
+  [[blocks.segments]]
+    type = 'text'
+    style = "plain"
+    template = " "
+    foreground_templates = ['{{ if gt .Code 0 }}#ef5350{{ end }}']
+    
+    [blocks.segments.properties]
+      always_enabled = true
+      cache_duration = "none"
+
+[transient_prompt]
+  foreground_templates = ['{{ if gt .Code 0 }}#ef5350{{ end }}']
+  background = "transparent"
+  template = " "
